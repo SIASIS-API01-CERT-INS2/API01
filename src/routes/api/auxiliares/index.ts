@@ -74,24 +74,24 @@ router.get("/", (async (req: Request, res: Response) => {
 }) as any);
 
 // Obtener un auxiliar por ID de usuario
-router.get("/:idUsuario", (async (req: Request, res: Response) => {
+router.get("/:idAuxiliar", (async (req: Request, res: Response) => {
   try {
-    const { idUsuario } = req.params;
+    const { idAuxiliar } = req.params;
     const rdp02EnUso = req.RDP02_INSTANCE!;
 
     // Validar el formato del ID de usuario
-    const idUsuarioValidation = validateIdentificadorDeUsuario(idUsuario, true);
-    if (!idUsuarioValidation.isValid) {
+    const idAuxiliarValidation = validateIdentificadorDeUsuario(idAuxiliar, true);
+    if (!idAuxiliarValidation.isValid) {
       return res.status(400).json({
         success: false,
-        message: idUsuarioValidation.errorMessage,
+        message: idAuxiliarValidation.errorMessage,
         errorType: ValidationErrorTypes.INVALID_USER_IDENTIFIER,
       } as ErrorResponseAPIBase);
     }
 
     // Obtener auxiliar
     const auxiliar = await buscarAuxiliarPorIdSelect(
-      idUsuario,
+      idAuxiliar,
       [
         "Id_Auxiliar",
         "Nombres",
@@ -137,25 +137,25 @@ router.get("/:idUsuario", (async (req: Request, res: Response) => {
 }) as any);
 
 // Actualizar un auxiliar
-router.put("/:idUsuario", (async (req: Request, res: Response) => {
+router.put("/:idAuxiliar", (async (req: Request, res: Response) => {
   try {
-    const { idUsuario } = req.params;
+    const { idAuxiliar } = req.params;
     const rdp02EnUso = req.RDP02_INSTANCE!;
     const { Nombres, Apellidos, Genero, Celular, Correo_Electronico } =
       req.body as UpdateAuxiliarRequestBody;
 
     // Validar el formato del ID de usuario
-    const idUsuarioValidation = validateIdentificadorDeUsuario(idUsuario, true);
-    if (!idUsuarioValidation.isValid) {
+    const idAuxiliarValidation = validateIdentificadorDeUsuario(idAuxiliar, true);
+    if (!idAuxiliarValidation.isValid) {
       return res.status(400).json({
         success: false,
-        message: idUsuarioValidation.errorMessage,
+        message: idAuxiliarValidation.errorMessage,
         errorType: ValidationErrorTypes.INVALID_USER_IDENTIFIER,
       } as ErrorResponseAPIBase);
     }
 
     // Verificar si el auxiliar existe
-    const existingAuxiliar = await verificarExistenciaAuxiliar(idUsuario, rdp02EnUso);
+    const existingAuxiliar = await verificarExistenciaAuxiliar(idAuxiliar, rdp02EnUso);
 
     if (!existingAuxiliar) {
       return res.status(404).json({
@@ -228,7 +228,7 @@ router.put("/:idUsuario", (async (req: Request, res: Response) => {
 
     // Actualizar auxiliar
     const updatedAuxiliar = await actualizarDatosDeAuxiliar(
-      idUsuario,
+      idAuxiliar,
       updateData,
       rdp02EnUso
     );
@@ -265,27 +265,27 @@ router.put("/:idUsuario", (async (req: Request, res: Response) => {
 
 // Cambiar estado de un auxiliar (activar/desactivar)
 router.patch(
-  "/:idUsuario/estado",
+  "/:idAuxiliar/estado",
   isDirectivoAuthenticated,
   checkAuthentication as any,
   (async (req: Request, res: Response) => {
     try {
-      const { idUsuario } = req.params;
+      const { idAuxiliar } = req.params;
       const rdp02EnUso = req.RDP02_INSTANCE!;
 
       // Validar el formato del ID de usuario
-      const idUsuarioValidation = validateIdentificadorDeUsuario(idUsuario, true);
-      if (!idUsuarioValidation.isValid) {
+      const idAuxiliarValidation = validateIdentificadorDeUsuario(idAuxiliar, true);
+      if (!idAuxiliarValidation.isValid) {
         return res.status(400).json({
           success: false,
-          message: idUsuarioValidation.errorMessage,
+          message: idAuxiliarValidation.errorMessage,
           errorType: ValidationErrorTypes.INVALID_USER_IDENTIFIER,
         } as ErrorResponseAPIBase);
       }
 
       // Cambiar el estado del auxiliar
       const updatedAuxiliar = await cambiarEstadoAuxiliar(
-        idUsuario,
+        idAuxiliar,
         undefined,
         rdp02EnUso
       );

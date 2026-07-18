@@ -1,5 +1,6 @@
 import { SuccessResponseAPIBase } from "../../types";
 import { AuxiliarSinContraseña } from "../../shared/others/types";
+import { Genero } from "../../../Genero";
 
 export type AuxiliarDataNecesariaParaCambioEstado = Pick<
   AuxiliarSinContraseña,
@@ -18,7 +19,7 @@ export interface GetAuxiliarSuccessResponse extends SuccessResponseAPIBase {
 export interface UpdateAuxiliarRequestBody {
   Nombres?: string;
   Apellidos?: string;
-  Genero?: string;
+  Genero?: Genero;
   Celular?: string;
   Correo_Electronico?: string | null;
 }

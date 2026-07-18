@@ -54,7 +54,7 @@ router.put("/", (async (req: Request, res: Response) => {
     const Rol = req.userRole!;
     const rdp02EnUso = req.RDP02_INSTANCE!;
     const userData = req.user!;
-    const { contraseñaActual, nuevaContraseña } =
+    const { ContraseñaActual, NuevaContraseña } =
       req.body as CambiarContraseñaRequestBody;
 
     // Verificar que el rol del token coincide con el rol solicitado
@@ -72,13 +72,13 @@ router.put("/", (async (req: Request, res: Response) => {
 
     // Configurar validadores
     const validators: ValidatorConfig[] = [
-      { field: "contraseñaActual", validator: validateCurrentPassword },
-      { field: "nuevaContraseña", validator: validatePassword },
+      { field: "ContraseñaActual", validator: validateCurrentPassword },
+      { field: "NuevaContraseña", validator: validatePassword },
     ];
 
     // Validar contraseñas
     const validationResult = validateData(
-      { contraseñaActual, nuevaContraseña },
+      { ContraseñaActual, NuevaContraseña },
       validators
     );
 
@@ -91,7 +91,7 @@ router.put("/", (async (req: Request, res: Response) => {
     }
 
     // Si la contraseña actual y la nueva son iguales
-    if (contraseñaActual === nuevaContraseña) {
+    if (ContraseñaActual === NuevaContraseña) {
       return res.status(400).json({
         success: false,
         message:
@@ -100,7 +100,7 @@ router.put("/", (async (req: Request, res: Response) => {
       } as ErrorResponseAPIBase);
     }
 
-    let contraseñaActualValida = false;
+    let ContraseñaActualValida = false;
     let contraseñaEncriptada = "";
     let contraseñaAlmacenada: string | null = null;
 
@@ -120,12 +120,12 @@ router.put("/", (async (req: Request, res: Response) => {
           } as ErrorResponseAPIBase);
         }
 
-        contraseñaActualValida = verifyDirectivoPassword(
-          contraseñaActual,
+        ContraseñaActualValida = verifyDirectivoPassword(
+          ContraseñaActual,
           contraseñaAlmacenada
         );
-        if (contraseñaActualValida) {
-          contraseñaEncriptada = encryptDirectivoPassword(nuevaContraseña);
+        if (ContraseñaActualValida) {
+          contraseñaEncriptada = encryptDirectivoPassword(NuevaContraseña);
         }
         break;
       }
@@ -144,12 +144,12 @@ router.put("/", (async (req: Request, res: Response) => {
           } as ErrorResponseAPIBase);
         }
 
-        contraseñaActualValida = verifyAuxiliarPassword(
-          contraseñaActual,
+        ContraseñaActualValida = verifyAuxiliarPassword(
+          ContraseñaActual,
           contraseñaAlmacenada
         );
-        if (contraseñaActualValida) {
-          contraseñaEncriptada = encryptAuxiliarPassword(nuevaContraseña);
+        if (ContraseñaActualValida) {
+          contraseñaEncriptada = encryptAuxiliarPassword(NuevaContraseña);
         }
         break;
       }
@@ -168,12 +168,12 @@ router.put("/", (async (req: Request, res: Response) => {
           } as ErrorResponseAPIBase);
         }
 
-        contraseñaActualValida = verifyDirectivoPassword(
-          contraseñaActual,
+        ContraseñaActualValida = verifyDirectivoPassword(
+          ContraseñaActual,
           contraseñaAlmacenada
         );
-        if (contraseñaActualValida) {
-          contraseñaEncriptada = encryptDirectivoPassword(nuevaContraseña);
+        if (ContraseñaActualValida) {
+          contraseñaEncriptada = encryptDirectivoPassword(NuevaContraseña);
         }
         break;
       }
@@ -196,12 +196,12 @@ router.put("/", (async (req: Request, res: Response) => {
           } as ErrorResponseAPIBase);
         }
 
-        contraseñaActualValida = verifyDirectivoPassword(
-          contraseñaActual,
+        ContraseñaActualValida = verifyDirectivoPassword(
+          ContraseñaActual,
           contraseñaAlmacenada
         );
-        if (contraseñaActualValida) {
-          contraseñaEncriptada = encryptDirectivoPassword(nuevaContraseña);
+        if (ContraseñaActualValida) {
+          contraseñaEncriptada = encryptDirectivoPassword(NuevaContraseña);
         }
         break;
       }
@@ -221,12 +221,12 @@ router.put("/", (async (req: Request, res: Response) => {
           } as ErrorResponseAPIBase);
         }
 
-        contraseñaActualValida = verifyDirectivoPassword(
-          contraseñaActual,
+        ContraseñaActualValida = verifyDirectivoPassword(
+          ContraseñaActual,
           contraseñaAlmacenada
         );
-        if (contraseñaActualValida) {
-          contraseñaEncriptada = encryptDirectivoPassword(nuevaContraseña);
+        if (ContraseñaActualValida) {
+          contraseñaEncriptada = encryptDirectivoPassword(NuevaContraseña);
         }
         break;
       }
@@ -246,12 +246,12 @@ router.put("/", (async (req: Request, res: Response) => {
             } as ErrorResponseAPIBase);
           }
 
-          contraseñaActualValida = verifyDirectivoPassword(
-            contraseñaActual,
+          ContraseñaActualValida = verifyDirectivoPassword(
+            ContraseñaActual,
             contraseñaAlmacenada
           );
-          if (contraseñaActualValida) {
-            contraseñaEncriptada = encryptDirectivoPassword(nuevaContraseña);
+          if (ContraseñaActualValida) {
+            contraseñaEncriptada = encryptDirectivoPassword(NuevaContraseña);
           }
           break;
         }
@@ -266,7 +266,7 @@ router.put("/", (async (req: Request, res: Response) => {
     }
 
     // Verificar si la contraseña actual es válida
-    if (!contraseñaActualValida) {
+    if (!ContraseñaActualValida) {
       return res.status(401).json({
         success: false,
         message: "La contraseña actual no es correcta",
